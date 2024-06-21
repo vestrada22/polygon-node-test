@@ -1,12 +1,19 @@
 export class ProductService {
+
     private products: string[] = [];
 
-    addProduct(product: string) {
-        this.products.push(product);
+    constructor() { }
+
+    listProducts() {
+        this.products
     }
 
-    getProducts() {
-        return this.products;
+    searchProducts(query: string) {
+        return this.products
+    }
+
+    getProductDetail() {
+        return this.products
     }
 
     async execute(url: string) {

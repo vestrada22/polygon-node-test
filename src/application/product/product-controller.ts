@@ -1,19 +1,44 @@
-class ProductController {
+import { Request, Response } from 'express'
+import { ProductService } from './product-service';
+import { ProductDto } from '../../domain/dto';
+import { CreateProduct, ProductDetails, ProductRepository, ProductsList, SearchProduct } from '../../domain';
+const productService = new ProductService();
+export class ProductController {
 
-    static async listProducts(req: Request, res: Response) {
-        const products = await ProductService.listProducts();
-        res.json(products);
+    constructor(private repository: ProductRepository) { }
+
+    createProduct(req: Request, res: Response) {
+        const [error, productDto] = ProductDto.create(req.body)
+        if (error) {
+            return res.status(400).json({ error })
+        }
+        new CreateProduct(this.repository)
+            .execute(productDto!)
+            .then(product => res.json(product))
+            .catch(error => res.status(400).json({ error }))
     }
 
-    static async searchProducts(req: Request, res: Response) {
-        const { query } = req.query;
-        const products = await ProductService.searchProducts(query as string);
-        res.json(products);
+    productsList(req: Request, res: Response) {
+        new ProductsList(this.repository)
+            .execute()
+            .then(products => res.json(products))
+            .catch(error => res.status(400).json({ error }))
     }
 
-    static async getProductDetail(req: Request, res: Response) {
-        const { id } = req.params;
-        const product = await ProductService.getProductDetail(parseInt(id));
-        res.json(product);
+    searchProducts(req: Request, res: Response) {
+        const { query } = req.params;
+        new SearchProduct(this.repository)
+            .execute(query)
+            .then(products => res.json(products))
+            .catch(error => res.status(400).json({ error }))
+    }
+
+    getProductDetail(req: Request, res: Response) {
+        const id = +req.params.id;
+
+        new ProductDetails(this.repository)
+            .execute(id)
+            .then(product => res.json(product))
+            .catch(error => res.status(400).json({ error }))
     }
 }
