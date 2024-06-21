@@ -1,17 +1,17 @@
 import { ProductDto } from '../../dto'
-import { ProductEntity } from '../../entities/product.entity'
-import { ProductRepository } from '../../repositories/product.repository'
+import { ShoppingCartRepository } from '../../repositories/shopping-cart.repository'
+import { ShoppingCartDto } from '../../dto/shopping-cart/shopping-cart-dto';
 
 export interface AddProductToCartUseCase {
-    execute(productDto: ProductDto): Promise<void>
+    execute(shoppingCartDto: ShoppingCartDto): Promise<void>
 }
 
 export class AddProductToCart implements AddProductToCartUseCase {
 
-    constructor(private readonly repository: ProductRepository) { }
+    constructor(private readonly repository: ShoppingCartRepository) { }
 
-    execute(productDto: ProductDto): Promise<void> {
-        return this.repository.addProductToCart(productDto)
+    execute(shoppingCartDto: ShoppingCartDto): Promise<void> {
+        return this.repository.addProductToCart(shoppingCartDto)
     }
 
 }

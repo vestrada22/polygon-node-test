@@ -1,11 +1,9 @@
 import { Request, Response } from 'express'
-import { ProductService } from './product-service';
 import { ProductDto } from '../../domain/dto';
 import { CreateProduct, ProductDetails, ProductRepository, ProductsList, SearchProduct } from '../../domain';
-const productService = new ProductService();
 export class ProductController {
 
-    constructor(private repository: ProductRepository) { }
+    constructor(private readonly repository: ProductRepository) { }
 
     createProduct(req: Request, res: Response) {
         const [error, productDto] = ProductDto.create(req.body)
@@ -27,6 +25,7 @@ export class ProductController {
 
     searchProducts(req: Request, res: Response) {
         const { query } = req.params;
+        console.log(query)
         new SearchProduct(this.repository)
             .execute(query)
             .then(products => res.json(products))

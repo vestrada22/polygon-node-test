@@ -15,6 +15,7 @@ async function main() {
             name: "Xbox",
             description: "Console of videogames",
             price: 3000,
+            stock: 25,
             category: "Gaming"
         }
     })

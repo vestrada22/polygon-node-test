@@ -1,4 +1,3 @@
-import { ProductDto } from "../../dto";
 import { ProductEntity } from "../../entities/product.entity";
 import { ProductRepository } from "../../repositories/product.repository";
 

@@ -1,4 +1,4 @@
-export class CartProduct {
+export class CartProductEntity {
     constructor(
       public cart_id: number,
       public product_id: number,

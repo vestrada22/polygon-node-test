@@ -1,5 +1,3 @@
-import { create } from "domain";
-
 export class ProductDto {
     private constructor(
         public readonly name: string,

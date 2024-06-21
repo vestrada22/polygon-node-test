@@ -4,7 +4,6 @@ import { ProductEntity } from "../entities/product.entity";
 export abstract class ProductRepository {
 
     abstract create(productDto: ProductDto): Promise<ProductEntity>
-    abstract addProductToCart(productDto: ProductDto): Promise<void>
     abstract findAll(): Promise<ProductEntity[]>
     abstract findOne(id: number): Promise<ProductEntity>
     abstract findMany(name: string): Promise<ProductEntity[]>
