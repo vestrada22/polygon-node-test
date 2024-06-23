@@ -1,4 +1,4 @@
-import { CartProductDto } from "../dto/cart-product/cart-product-dto"
+import { CartProductDto } from '../dto/cart-product/cart-product-dto'
 
 export class ShoppingCartEntity {
     constructor(
@@ -9,11 +9,11 @@ export class ShoppingCartEntity {
     ) { }
 
     public static objectMapper(object: { [key: string]: any }): ShoppingCartEntity {
-        const { id, cartProduct, create_at, updated_at } = object
+        const { id, cartProducts, create_at, updated_at } = object
 
         return new ShoppingCartEntity(
             id,
-            cartProduct,
+            cartProducts,
             create_at,
             updated_at
         )

@@ -1,9 +1,16 @@
 import { Request, Response } from 'express'
-import { ProductDto } from '../../domain/dto';
-import { CreateProduct, ProductDetails, ProductRepository, ProductsList, SearchProduct } from '../../domain';
+import { ProductDto } from '../../domain/dto/product/product.dto'
+import { ProductRepository } from '../../domain/repositories/product.repository'
+import { CreateProduct } from '../../domain/use-cases/product/create-product'
+import { ProductsList } from '../../domain/use-cases/product/products-list'
+import { SearchProduct } from '../../domain/use-cases/product/search-products'
+import { ProductDetails } from '../../domain/use-cases/product/product-details'
+
 export class ProductController {
 
-    constructor(private readonly repository: ProductRepository) { }
+    constructor(
+        private readonly repository: ProductRepository
+    ) { }
 
     createProduct(req: Request, res: Response) {
         const [error, productDto] = ProductDto.create(req.body)
@@ -24,7 +31,7 @@ export class ProductController {
     }
 
     searchProducts(req: Request, res: Response) {
-        const { query } = req.params;
+        const { query } = req.params
         console.log(query)
         new SearchProduct(this.repository)
             .execute(query)
@@ -33,7 +40,7 @@ export class ProductController {
     }
 
     getProductDetail(req: Request, res: Response) {
-        const id = +req.params.id;
+        const id = +req.params.id
 
         new ProductDetails(this.repository)
             .execute(id)

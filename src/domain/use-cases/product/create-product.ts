@@ -1,6 +1,6 @@
-import { ProductDto } from "../../dto";
-import { ProductEntity } from "../../entities/product.entity";
-import { ProductRepository } from "../../repositories/product.repository";
+import { ProductDto } from '../../dto'
+import { ProductEntity } from '../../entities/product.entity'
+import { ProductRepository } from '../../repositories/product.repository'
 
 export interface CreateProductUseCase {
     execute(dto: ProductDto): Promise<ProductEntity>

@@ -1,4 +1,3 @@
-import { create } from 'domain';
 export class ProductEntity {
     constructor(
         public id: string,
@@ -13,7 +12,7 @@ export class ProductEntity {
         const { id, name, description, price, stock, category } = object
 
         if (!name || !description || !category || !price) {
-            throw new Error('Some field are not valid or empty.')
+            throw new Error('Some fields are not valid or empty.')
         }
 
         return new ProductEntity(

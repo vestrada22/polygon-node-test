@@ -1,7 +1,7 @@
-import { Router } from "express";
-import { ProductController } from "../product/product-controller";
-import { ProductDatasourceImpl } from "../../infraestructure/datasources/product.datasource.impl";
-import { ProductRepositoryImpl } from "../../infraestructure/repositories/product.repository";
+import { Request, Response, Router } from 'express'
+import { ProductController } from '../product/product-controller'
+import { ProductDatasourceImpl } from '../../infraestructure/datasources/product.datasource.impl'
+import { ProductRepositoryImpl } from '../../infraestructure/repositories/product.repository.impl'
 
 export class ProductRoutes {
 
@@ -12,15 +12,11 @@ export class ProductRoutes {
         const repository = new ProductRepositoryImpl(datasource)
         const controller = new ProductController(repository)
 
-        console.log(datasource);
-        console.log(repository);
-        console.log(controller);
+        router.post('/', (req: Request, res: Response) => controller.createProduct(req, res))
+        router.get('/', (req: Request, res: Response) => controller.productsList(req, res))
+        router.get('/details/:id', (req: Request, res: Response) => controller.getProductDetail(req, res))
+        router.get('/search/:query', (req: Request, res: Response) => controller.searchProducts(req, res))
 
-        router.post("/", controller.createProduct)
-        router.get("/", controller.productsList)
-        router.get("/:id", controller.getProductDetail)
-        router.get("/search/:query", controller.searchProducts)
-
-        return router;
+        return router
     }
 }

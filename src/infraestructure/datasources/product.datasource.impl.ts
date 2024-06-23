@@ -1,5 +1,5 @@
-import { prisma } from "../../data/postgres";
-import { ProductDatasource, ProductDto, ProductEntity } from "../../domain";
+import { prisma } from '../../data/postgres'
+import { ProductDatasource, ProductDto, ProductEntity } from '../../domain'
 
 export class ProductDatasourceImpl implements ProductDatasource {
 
@@ -19,8 +19,8 @@ export class ProductDatasourceImpl implements ProductDatasource {
         return ProductEntity.objectMapper(product)
     }
 
-    findMany(name: string): Promise<ProductEntity[]> {
-        const products = prisma.product.findMany({
+    async findMany(name: string): Promise<ProductEntity[]> {
+        const products = await prisma.product.findMany({
             where: {
                 name: {
                     contains: name,
@@ -28,9 +28,7 @@ export class ProductDatasourceImpl implements ProductDatasource {
                 },
             },
         })
-        return products
-        .then(products => products.map(product => ProductEntity.objectMapper(product)))
-        .catch(err => { throw new Error(err) })
+        return products.map(product => ProductEntity.objectMapper(product))
     }
 
 }

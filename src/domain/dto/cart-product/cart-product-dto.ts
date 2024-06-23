@@ -7,8 +7,8 @@ export class CartProductDto {
     ) { }
 
     static create(props: { [key: string]: any }): [string?, CartProductDto?] {
-        const { cart_id, product_id, quantity, price } = props;
+        const { cart_id, product_id, quantity, price } = props
 
-        return [undefined, new CartProductDto(cart_id, product_id, quantity, price)];
+        return [undefined, new CartProductDto(cart_id, product_id, quantity, price)]
     }
 }

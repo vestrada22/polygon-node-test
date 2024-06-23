@@ -8,7 +8,6 @@ export * from './use-cases/product/search-products'
 export * from './use-cases/product/products-list'
 export * from './use-cases/product/product-details'
 
-export * from './use-cases/shopping-cart/create-shopping-cart'
-export * from './use-cases/shopping-cart/shopping-cart-details'
-
-export * from './use-cases/cart-product/create-cart-product'
+export * from './use-cases/shopping-cart/add-to-cart'
+export * from './use-cases/shopping-cart/remove-from-cart'
+export * from './use-cases/shopping-cart/cart-details'
