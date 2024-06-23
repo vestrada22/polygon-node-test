@@ -1,4 +1,4 @@
-import express, { Router } from 'express'
+import express, { Router, Express } from 'express'
 
 interface Options {
     port?: number
@@ -15,6 +15,10 @@ export class Server {
         const { port = 3100, routes } = options
         this.port = port
         this.routes = routes
+    }
+
+    getApp(): Express {
+        return this.app
     }
 
     async start() {

@@ -1,6 +1,7 @@
 import { Server } from './application/server'
 import { environments } from './config/environments'
 import { AppRoutes } from './application/routes'
+import { setupSwagger } from './config/swagger'
 
 (async () => {
     main()
@@ -8,8 +9,12 @@ import { AppRoutes } from './application/routes'
 
 async function main() {
 
-    new Server({
+    const server = new Server({
         port: environments.PORT,
         routes: AppRoutes.routes
-    }).start()
+    })
+
+    setupSwagger(server.getApp())
+
+    server.start()
 }
