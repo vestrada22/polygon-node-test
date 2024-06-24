@@ -19,4 +19,7 @@ export class ShoppingCartRepositoryImpl implements ShoppingCartRepository {
         return this.datasource.cartDetails(id)
     }
 
+    completePurchase(cartId: number): Promise<void> {
+        return this.datasource.completePurchase(cartId)
+    }
 }

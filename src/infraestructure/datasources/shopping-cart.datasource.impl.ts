@@ -75,4 +75,48 @@ export class ShoppingCartDatasourceImpl implements ShoppingCartDatasource {
         return ShoppingCartEntity.objectMapper(shoppingCart)
     }
 
+    async completePurchase(cartId: number): Promise<void> {
+        const cart = await prisma.shoppingCart.findUnique({
+            where: {
+                id: cartId
+            },
+            include: {
+                cartProducts: true
+            }
+        })
+
+        if (!cart) throw new Error('Shopping Cart not found')
+
+        for (const cartProduct of cart.cartProducts) {
+            await prisma.sale.create({
+                data: {
+                    productId: cartProduct.product_id,
+                    quantity: cartProduct.quantity,
+                    total: cartProduct.quantity * cartProduct.price,
+                    createdAt: new Date()
+                }
+            })
+
+            await prisma.product.update({
+                where: {
+                    id: cartProduct.product_id
+                },
+                data: {
+                    stock: {
+                        decrement: cartProduct.quantity
+                    }
+                }
+            })
+
+            await prisma.cartProduct.deleteMany({
+                where: { cart_id: cartId }
+            })
+
+            await prisma.shoppingCart.update({
+                where: { id: cartId },
+                data: { updatedAt: new Date() }
+            })
+        }
+    }
+
 }

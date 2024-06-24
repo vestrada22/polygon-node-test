@@ -12,6 +12,17 @@ CREATE TABLE "products" (
 );
 
 -- CreateTable
+CREATE TABLE "sales" (
+    "id" SERIAL NOT NULL,
+    "productId" INTEGER NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "sales_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "shopping_cart" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -29,6 +40,9 @@ CREATE TABLE "cart_products" (
 
     CONSTRAINT "cart_products_pkey" PRIMARY KEY ("cart_id","product_id")
 );
+
+-- AddForeignKey
+ALTER TABLE "sales" ADD CONSTRAINT "sales_productId_fkey" FOREIGN KEY ("productId") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "cart_products" ADD CONSTRAINT "cart_products_cart_id_fkey" FOREIGN KEY ("cart_id") REFERENCES "shopping_cart"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

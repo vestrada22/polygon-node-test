@@ -1,0 +1,79 @@
+service: polygon-marketplace
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  environment:
+    POSTGRES_HOST: ${env:POSTGRES_HOST}
+    POSTGRES_PORT: ${env:POSTGRES_PORT}
+    POSTGRES_USER: ${env:POSTGRES_USER}
+    POSTGRES_PASSWORD: ${env:POSTGRES_PASSWORD}
+    POSTGRES_DB: ${env:POSTGRES_DB}
+
+functions:
+  createproduct:
+    handler: src/functions/product/createProduct.createProduct
+    events:
+      - http:
+          path: products
+          method: post
+
+  listProducts:
+    handler: src/functions/product/listProducts.listProducts
+    events:
+      - http:
+          path: products
+          method: get
+
+  searchProducts:
+    handler: src/functions/product/searchProducts.searchProducts
+    events:
+      - http:
+          path: products/search/{query}
+          method: get
+
+  getProductDetail:
+    handler: src/functions/product/getProductDetail.getProductDetail
+    events:
+      - http:
+          path: products/details/{id}
+          method: get
+
+  getProductsSalesByCategoryAndMonth:
+    handler: src/functions/product/getProductsSalesByCategoryAndMonth.getProductsSalesByCategoryAndMonth
+    events:
+      - http:
+          path: products/sales
+          method: get
+
+  addToCart:
+    handler: src/functions/cart/addToCart.addToCart
+    events:
+      - http:
+          path: shopping-cart
+          method: post
+
+  removeFromCart:
+    handler: src/functions/cart/removeFromCart.removeFromCart
+    events:
+      - http:
+          path: shopping-cart
+          method: delete
+
+  cartDetails:
+    handler: src/functions/cart/cartDetails.cartDetails
+    events:
+      - http:
+          path: shopping-cart/{id}
+          method: get
+  
+  completePurchase:
+    handler: src/functions/purchase/completePurchase.completePurchase
+    events:
+      - http:
+          path: purchase
+          method: post
+
+plugins:
+  - serverless-dotenv-plugin

@@ -44,6 +44,14 @@ const options = {
             },
           },
         },
+        ProductsSalesDto: {
+          type: 'object',
+          properties: {
+            category: { type: 'string' },
+            month: { type: 'string' },
+            totalSales: { type: 'number' },
+          },
+        },
         AddToCartDto: {
           type: 'object',
           properties: {

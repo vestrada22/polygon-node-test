@@ -22,6 +22,8 @@ export class ShoppingCartRoutes {
          *         application/json:
          *           schema:
          *             $ref: '#/components/schemas/AddToCartDto'
+         *     tags:
+         *      - Shopping Cart
          *     responses:
          *       200:
          *         description: Product added to the cart
@@ -47,6 +49,8 @@ export class ShoppingCartRoutes {
          *         application/json:
          *           schema:
          *             $ref: '#/components/schemas/RemoveFromCartDto'
+         *     tags:
+         *       - Shopping Cart
          *     responses:
          *       200:
          *         description: Product removed from the cart
@@ -73,6 +77,8 @@ export class ShoppingCartRoutes {
          *         schema:
          *           type: integer
          *         description: Shopping Cart ID
+         *     tags:
+         *      - Shopping Cart
          *     responses:
          *       200:
          *         description: Shopping cart details
@@ -86,6 +92,37 @@ export class ShoppingCartRoutes {
          *         description: Shopping cart not found
         */
         router.get('/:cartId', (req: Request, res: Response) => controller.cartDetails(req, res))
+
+        /**
+         * @swagger
+         * /api/shopping-cart/complete-purchase:
+         *   post:
+         *     summary: Complete a purchase
+         *     requestBody:
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *              cartId: 1
+         *     tags:
+         *       - Shopping Cart
+         *     responses:
+         *       200:
+         *         description: Purchase completed successfully
+         *         content:
+         *           application/json:
+         *             schema:
+         *              type: object
+         *              properties:
+         *                 message:
+         *                   type: string
+         *                   example: Purchase completed successfully
+         *       400:
+         *         description: Bad request
+         *       404:
+         *         description: Shopping cart not found
+        */
+        router.post('/complete-purchase', (req: Request, res: Response) => controller.completePurchase(req, res))
 
         return router
     }
